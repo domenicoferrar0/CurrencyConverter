@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class APIController {
     @Autowired
     private ExchangeService service;
+
     @GetMapping("/result/{baseCurrency}/{convertTo}")
     public ResponseEntity<Double> getResult(@PathVariable("baseCurrency")Currency baseCurrency, @PathVariable("convertTo") Currency convertTo,
     @RequestParam(value = "value", required = true) Double value){

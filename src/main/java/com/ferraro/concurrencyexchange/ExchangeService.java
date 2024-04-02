@@ -9,9 +9,6 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class ExchangeService {
 
-    private String baseCurrency = "";
-    private String convertTo = "";
-
     private RestTemplate template = new RestTemplate();
     private ObjectMapper mapper = new ObjectMapper();
 

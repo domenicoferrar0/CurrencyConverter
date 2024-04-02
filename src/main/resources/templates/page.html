@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f2f2f2;
+        }
+        .converter {
+            width: 350px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        select, input[type="number"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            flex-basis: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="converter">
+    <select id="baseCurrency" name="baseCurrency">
+        <option th:each="currency : ${T(com.ferraro.concurrencyexchange.Currency).values()}"
+                th:value="${currency}" th:text="${currency + currency.getSymbol()}">
+        </option>
+    </select>
+    <input type="number" id="value" name="value" placeholder="Enter value">
+    <select id="convertTo" name="convertTo">
+        <option th:each="currency : ${T(com.ferraro.concurrencyexchange.Currency).values()}"
+                th:value="${currency}" th:text="${currency + currency.getSymbol()}">
+        </option>
+    </select>
+    <input id="convertBtn" type="submit" value="Convert">
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#convertBtn').click(function() {
+            var baseCurrency = $("#baseCurrency").val();
+            var convertTo = $("#convertTo").val();
+            var value = $("#value").val();
+
+            // AJAX request to fetch currency conversion
+            $.ajax({
+                url: "/rest/api/v0/result/" + baseCurrency + "/" + convertTo + "?value=" + value,
+                type: "GET",
+                dataType: "json",
+                success: function(response) {
+                    // Assuming response is a double representing the converted value
+                    // Update the value input with the converted value
+                    $("#value").val(response);
+
+                    // Update the content of the span element with the converted value
+                    $("#value").text(response);
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors here
+                    alert(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

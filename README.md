@@ -1,5 +1,11 @@
-This is a simple currency converter made in a couple hours for exercising third parties API calls 
-I am using:
-  freecurrencyapi.com API for fetching the exchange rate between the different currencies
-  RestTemplate from Spring Webflux to make the API Calls and JsonNode to extract the effective response
-  Thymeleaf for server side rendering of the html page
+Currency Converter
+This is a simple currency converter made in a couple of hours for exercising third-party API calls.
+
+Technologies Used:
+
+API: freecurrencyapi.com for fetching the exchange rates between different currencies.
+Java Library: RestTemplate from Spring Webflux to make the API calls.
+Data Handling: JsonNode to extract the effective response.
+Frontend Rendering: Thymeleaf for server-side rendering of the HTML page.
+
+![Currency Converter](https://i.imgur.com/fta0OyT.png)
